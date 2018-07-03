@@ -41,7 +41,7 @@ export default {
 		this.$http.post(api, vm.user).then((res) => {
 			console.log(res.data);
 			if (res.data.success) {
-				vm.$router.push('/')
+				vm.$router.push('/admin/products')
 			}
 		});
 		},
