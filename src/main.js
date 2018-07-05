@@ -2,12 +2,16 @@ import Vue from 'vue';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import 'bootstrap';
+import { TrinityRingsSpinner } from 'epic-spinners';
 
 import App from './App';
 import router from './router';
+import './bus';
 
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
+
+Vue.component('TrinityRingsSpinner', TrinityRingsSpinner); //全域組件
 
 new Vue({
   el: '#app',

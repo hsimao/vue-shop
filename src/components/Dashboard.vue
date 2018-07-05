@@ -1,10 +1,10 @@
 <template>
   <div>
     <Navbar/>
+    <Alert/>
     <div class="container-fluid">
       <div class="row">
         <Sidebar></Sidebar>
-        <!-- <nav class="col-md-3 d-none d-md-block bg-light sidebar"> -->
         <main role="main" class="col-md-9 ml-sm-auto col-lg-9 px-4">
           <router-view></router-view>
         </main>
@@ -16,11 +16,14 @@
 <script>
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
+import Alert from './AlertMessage';
+import Pagination from './Pagination';
 
 export default {
   components: {
     Sidebar,
     Navbar,
+    Alert,
   }
 };
 </script>

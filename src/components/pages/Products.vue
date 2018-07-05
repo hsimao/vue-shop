@@ -1,5 +1,12 @@
 <template>
 	<div>
+    <div class="loading center" v-if="isLoading">
+      <trinity-rings-spinner
+        :animation-duration="1500"
+        :size="100"
+        color="#7971ea"
+      />
+    </div>
     <div class="text-right mt-4">
       <button class="btn btn-primary" @click="openModal('add')">建立新的產品</button>
     </div>
@@ -32,6 +39,8 @@
       </tbody>
     </table>
 
+    <Pagination/>
+
     <!-- 產品新增、編輯modal -->
     <div class="modal fade" id="productModal" tabindex="-1" role="dialog"
       aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -55,7 +64,10 @@
                 </div>
                 <div class="form-group">
                   <label for="customFile">或 上傳圖片
-                    <i class="fas fa-spinner fa-spin"></i>
+                    <div class="loading inline" v-if="isLoadingFile">
+                      <trinity-rings-spinner :animation-duration="1500"
+                        :size="28" color="#7971ea" />
+                    </div>
                   </label>
                   <input @change="uploadFile" type="file" id="customFile" class="form-control"
                     ref="files">
@@ -159,20 +171,30 @@
 
 <script>
 import $ from 'jquery';
+import Pagination from '@/components/Pagination';
 
 export default {
+  components: {
+    Pagination
+  },
   data() {
     return {
       products: [],
       tempProduct: {},
       type: null,
+      isLoading: false,
+      isLoadingFile: false,
+      pagination: {},
     };
   },
   methods: {
-    getProducts() {
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/products`;
+    getProducts(page = 1) {
+      this.isLoading = true;
+      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/products?page=${page}`;
       this.$http.get(api).then((res) => {
-        this.products = res.data.products
+        this.products = res.data.products;
+        this.pagination = res.data.pagination;
+        this.isLoading = false;
       });
     },
 
@@ -212,10 +234,10 @@ export default {
 
       this.$http[httpMathod](api, { data: this.tempProduct }).then((res) => {
         if (res.data.success) {
-          console.log(res.data.message);
+          this.$bus.$emit('message:push', res.data.message, 'success')
           this.getProducts();
         } else {
-          console.log(res.data.message);
+          this.$bus.$emit('message:push', res.data.message, 'danger')
         }
         $('#productModal').modal('hide');
         $('#delProductModal').modal('hide');
@@ -226,6 +248,7 @@ export default {
 
     // 上傳圖片處理方法
     uploadFile() {
+      this.isLoadingFile = true;
       const img = this.$refs.files.files[0];
       const formData = new FormData();
       formData.append('file-to-upload', img);
@@ -235,8 +258,11 @@ export default {
           'Content-type': 'multipart/form-data',
         }
       }).then((res) => {
+        this.isLoadingFile = false;
         if (res.data.success) {
           this.$set(this.tempProduct, 'imageUrl' ,res.data.imageUrl);
+        } else {
+          this.$bus.$emit('message:push', res.data.message, 'danger')
         }
       });
     },
@@ -247,3 +273,7 @@ export default {
   }
 };
 </script>
+
+<style lang="sass" scoped>
+
+</style>
