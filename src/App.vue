@@ -1,7 +1,7 @@
 <template>
 	<div id="app">
-			<router-view/>
-		</div>
+    <router-view/>
+	</div>
 </template>
 
 <script>
@@ -22,4 +22,7 @@ export default {
 .loading.inline
   display: inline-block
   vertical-align: middle
+
+.router-link-active
+  color: #7971ea !important
 </style>

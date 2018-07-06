@@ -2,16 +2,18 @@ import Vue from 'vue';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import 'bootstrap';
-import { TrinityRingsSpinner } from 'epic-spinners';
+import { HalfCircleSpinner } from 'epic-spinners';
 
 import App from './App';
 import router from './router';
 import './bus';
+import currencyFilter from './filters/currency';
 
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
 
-Vue.component('TrinityRingsSpinner', TrinityRingsSpinner); //全域組件
+Vue.filter('currency', currencyFilter);
+Vue.component('HalfCircleSpinner', HalfCircleSpinner); //全域組件
 
 new Vue({
   el: '#app',

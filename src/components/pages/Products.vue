@@ -1,7 +1,7 @@
 <template>
 	<div>
     <div class="loading center" v-if="isLoading">
-      <trinity-rings-spinner
+      <half-circle-spinner
         :animation-duration="1500"
         :size="100"
         color="#7971ea"
@@ -25,8 +25,8 @@
         <tr v-for="(item) in products" :key="item.id">
           <td>{{item.category}}</td>
           <td>{{item.title}}</td>
-          <td class="text-right">{{item.origin_price}}</td>
-          <td class="text-right">{{item.price}}</td>
+          <td class="text-right">{{item.origin_price | currency}}</td>
+          <td class="text-right">{{item.price | currency}}</td>
           <td>
             <span v-if="item.is_enabled" class="text-success">啟用</span>
             <span v-else>未啟用</span>
@@ -65,7 +65,7 @@
                 <div class="form-group">
                   <label for="customFile">或 上傳圖片
                     <div class="loading inline" v-if="isLoadingFile">
-                      <trinity-rings-spinner :animation-duration="1500"
+                      <half-circle-spinner :animation-duration="1500"
                         :size="28" color="#7971ea" />
                     </div>
                   </label>
