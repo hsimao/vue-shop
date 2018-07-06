@@ -33,13 +33,13 @@
           </td>
           <td>
             <button @click="openModal('edit', item)" class="btn btn-outline-primary btn-sm">編輯</button>
-            <button @click="openModal('del', item)" class="btn btn-outline-primary btn-sm">刪除</button>
+            <button @click="openModal('del', item)" class="btn btn-outline-danger btn-sm">刪除</button>
           </td>
         </tr>
       </tbody>
     </table>
 
-    <Pagination/>
+    <Pagination :pagination="pagination" @update-page="getProducts"/>
 
     <!-- 產品新增、編輯modal -->
     <div class="modal fade" id="productModal" tabindex="-1" role="dialog"

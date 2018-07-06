@@ -4,7 +4,7 @@
       <ul class="pagination">
         <li class="page-item" :class="{'disabled' : !pagination.has_pre}">
           <a class="page-link" href="#" aria-label="Previous"
-              @click.prevent="getProducts(pagination.current_page - 1)">
+              @click.prevent="updatePage(pagination.current_page - 1)">
             <span aria-hidden="true">&laquo;</span>
             <span class="sr-only">Previous</span>
           </a>
@@ -13,11 +13,11 @@
             v-for="page in pagination.total_pages" :key="page"
             :class="{'active' : pagination.current_page === page}"
             >
-          <a class="page-link" href="#" @click.prevent="getProducts(page)">{{page}}</a>
+          <a class="page-link" href="#" @click.prevent="updatePage(page)">{{page}}</a>
         </li>
         <li class="page-item" :class="{'disabled' : !pagination.has_next}">
           <a class="page-link" href="#" aria-label="Next"
-              @click.prevent="getProducts(pagination.current_page + 1)">
+              @click.prevent="updatePage(pagination.current_page + 1)">
             <span aria-hidden="true">&raquo;</span>
             <span class="sr-only">Next</span>
           </a>
@@ -30,51 +30,13 @@
 <script>
 
 export default {
-  data() {
-    return {
-      pagination: {},
-    };
-  },
-
+  props: ['pagination'],
   methods: {
-    getPagination() {
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/products`;
-      this.$http.get(api).then((res) => {
-        this.pagination = res.data.pagination;
-      });
+    updatePage(page) {
+      console.log(page)
+      this.$emit('update-page', Number(page))
     },
-    updateMessage(page = 1) {
-      this.messages.push({
-        message,
-        status,
-        timestamp,
-      });
-      this.removeMessageWithTiming(timestamp);
-    },
-
-    removeMessage(num) {
-      this.messages.splice(num, 1);
-    },
-
-    removeMessageWithTiming(timestamp) {
-      setTimeout(() => {
-        this.messages.forEach((item, i) => {
-          if (item.timestamp === timestamp) {
-            this.messages.splice(i, 1);
-          }
-        });
-      }, 5000);
-    },
-
   },
-
-  created() {
-    this.getPagination();
-    this.$bus.$on('page:push', (page) => {
-      this.updatePage(page);
-    });
-  }
-
 };
 </script>
 
