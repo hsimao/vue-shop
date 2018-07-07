@@ -3,7 +3,7 @@
     <div class="loading center" v-if="isLoading">
       <half-circle-spinner
         :animation-duration="1500"
-        :size="100"
+        :size="80"
         color="#7971ea"
       />
     </div>
@@ -171,12 +171,8 @@
 
 <script>
 import $ from 'jquery';
-import Pagination from '@/components/Pagination';
 
 export default {
-  components: {
-    Pagination
-  },
   data() {
     return {
       products: [],

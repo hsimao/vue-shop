@@ -2,3 +2,18 @@
 .btn, .modal-content ,.modal-header
   border-radius: 0
 
+// 卡片超出省略字符
+.card-title,.card-text
+  overflow: hidden
+  display: -webkit-box
+  -webkit-box-orient: vertical
+.card-title
+  max-height: 55px
+  -webkit-line-clamp: 2
+.card-text
+  max-height: 123px
+  -webkit-line-clamp: 4
+
+// 消除table 隔線
+.table th, .table td, .table thead th
+  border: none

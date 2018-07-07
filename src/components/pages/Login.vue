@@ -1,6 +1,13 @@
 <template>
 	<div>
-		<form class="form-signin" @submit.prevent="signin">
+    <div class="loading center" v-if="isLoading">
+      <half-circle-spinner
+        :animation-duration="1500"
+        :size="80"
+        color="#7971ea"
+      />
+    </div>
+		<form class="form-signin" @submit.prevent="signin" @keyup.enter="signin">
 			<div class="text-center mb-4">
 				<h1 class="h3 mb-3 font-weight-normal">請先登入</h1>
 			</div>
@@ -30,20 +37,25 @@ export default {
 		return {
 			user: {
 				username: '',
-				password: '',
-			}
+        password: '',
+      },
+      isLoading: false,
 		}
 	},
 	methods: {
 		signin() {
-		const api = `${process.env.APIPATH}/signin`;
-		const vm = this
-		this.$http.post(api, vm.user).then((res) => {
-			console.log(res.data);
-			if (res.data.success) {
-				vm.$router.push('/admin/products')
-			}
-		});
+      this.isLoading = true;
+      const api = `${process.env.APIPATH}/signin`;
+      const vm = this
+      this.$http.post(api, vm.user).then((res) => {
+        this.isLoading = false;
+        if (res.data.success) {
+          vm.$router.push('/admin/products')
+        } else {
+          console.log("失敗")
+          this.$bus.$emit('message:push', res.data.message, 'danger')
+        }
+      });
 		},
 	},
 };

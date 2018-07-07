@@ -3,6 +3,7 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 import 'bootstrap';
 import { HalfCircleSpinner } from 'epic-spinners';
+import Pagination from '@/components/Pagination';
 
 import App from './App';
 import router from './router';
@@ -14,6 +15,7 @@ Vue.use(VueAxios, axios);
 
 Vue.filter('currency', currencyFilter);
 Vue.component('HalfCircleSpinner', HalfCircleSpinner); //全域組件
+Vue.component('Pagination', Pagination); //全域組件
 
 new Vue({
   el: '#app',
