@@ -1,5 +1,5 @@
 <template>
-  <nav class="col-md-3 d-none d-md-block bg-light sidebar">
+  <nav class="col-md-2 d-none d-md-block bg-light sidebar">
     <div class="sidebar-sticky">
       <h6 class="sidebar-heading d-flex justify-content-between align-items-center
         px-3 mt-4 mb-1 text-muted">
@@ -16,13 +16,13 @@
           </router-link>
         </li>
         <li class="nav-item">
-          <router-link to="/admin/01" class="nav-link">
+          <router-link to="/admin/orders" class="nav-link">
             <i class="ion ion-md-list-box"></i>
             訂單列表
           </router-link>
         </li>
         <li class="nav-item">
-          <router-link to="/admin/03" class="nav-link">
+          <router-link to="/admin/coupons" class="nav-link">
             <i class="ion ion-md-paper"></i>
             優惠券
           </router-link>

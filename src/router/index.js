@@ -3,7 +3,9 @@ import Router from 'vue-router';
 import Dashboard from '@/components/Dashboard';
 import Login from '@/components/pages/Login';
 import Products from '@/components/pages/Products';
+import Orders from '@/components/pages/Orders';
 import CustomerOrder from '@/components/pages/CustomerOrder';
+import Coupons from '@/components/pages/Coupons';
 
 Vue.use(Router);
 
@@ -30,7 +32,18 @@ export default new Router({
         name: 'Products',
         component: Products,
         meta: { requiresAuth: true },
-      }]
+      },{
+        path: 'Orders',
+        name: 'Orders',
+        component: Orders,
+        meta: { requiresAuth: true },
+      },{
+        path: 'Coupons',
+        name: 'Coupons',
+        component: Coupons,
+        meta: { requiresAuth: true },
+      },
+    ]
     },
 
     {
