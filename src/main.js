@@ -34,11 +34,9 @@ router.beforeEach((to, from, next) => {
 
     // 呼叫檢查API, 確認是否已登入
     axios.post(api).then((res)=>{
-
       // 如果已經登入，放行轉跳
       if (res.data.success) {
         next();
-
       // 尚未登入，轉跳到登入頁面
       } else {
         next({

@@ -113,9 +113,9 @@
               </td>
               <td class="align-middle">
                 {{ item.product.title }}
-                <!-- <div class="text-success" v-if="item.coupon">
+                <div class="text-success" v-if="item.coupon">
                   已套用優惠券
-                </div> -->
+                </div>
               </td>
               <td class="align-middle">{{ item.qty }}/{{ item.product.unit }}</td>
               <td class="align-middle text-right">{{ item.final_total }}</td>
@@ -126,16 +126,16 @@
               <td colspan="3" class="text-right">總計</td>
               <td class="text-right">{{ cart.total }}</td>
             </tr>
-            <tr class="h4">
+            <tr class="h4" v-if="cart.final_total !== cart.total">
               <td colspan="3" class="text-right text-success">折扣價</td>
               <td class="text-right text-success">{{ cart.final_total }}</td>
             </tr>
           </tfoot>
         </table>
         <div class="input-group input-group-sm p-4">
-          <input type="text" class="form-control" placeholder="請輸入優惠碼">
+          <input type="text" class="form-control" v-model="coupon_code" placeholder="請輸入優惠碼">
           <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button">
+            <button class="btn btn-outline-secondary" type="button" @click="addCoupon">
               套用優惠碼
             </button>
           </div>
@@ -159,6 +159,7 @@ export default {
       isLoadingOrder: false,
       loadingItem: '',
       pagination: {},
+      coupon_code: ''
     };
   },
   methods: {
@@ -195,27 +196,38 @@ export default {
       this.$http.get(api).then((res) => {
       this.cart = res.data.data;
       this.isLoadingOrder = false;
-      console.log(this.cart)
-      console.log(this.cart.carts.length)
       });
     },
     removeCart(id) {
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${id}`;
       this.$http.delete(api).then((res) => {
         if (res.data.success) {
-          this.$bus.$emit('message:push', res.data.message, 'success')
+          this.$bus.$emit('message:push', res.data.message, 'success');
         } else {
-          this.$bus.$emit('message:push', res.data.message, 'danger')
+          this.$bus.$emit('message:push', res.data.message, 'danger');
         }
         this.getCart();
       });
     },
+    addCoupon() {
+      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/coupon`;
+      const coupon = { code: this.coupon_code };
+      this.$http.post(api, {data: coupon}).then((res) => {
+        if (res.data.success) {
+          this.$bus.$emit('message:push', res.data.message, 'success');
+          this.getCart();
+        } else {
+          this.$bus.$emit('message:push', res.data.message, 'danger');
+        }
+        this.coupon_code = '';
+      });
+    }
 
   },
   computed: {
     hasOrder() {
       if (this.cart.carts) {
-        if ([...this.cart.carts].length > 0) return true
+        if ([...this.cart.carts].length > 0) return true;
       }
       return false
     }
