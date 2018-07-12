@@ -89,13 +89,6 @@
 
     <!-- 購物車明細 -->
     <div v-if="hasOrder" class="row justify-content-center mt-5 mb-5 no-gutters">
-      <div class="loading center" v-if="isLoadingOrder">
-        <half-circle-spinner
-          :animation-duration="1500"
-          :size="80"
-          color="#7971ea"
-        />
-      </div>
       <div class="col-8 shadow-sm">
         <table class="table table-striped">
           <thead class="bg-secondary text-white">
@@ -143,6 +136,52 @@
       </div>
     </div>
 
+    <div class="my-5 row justify-content-center">
+      <form class="col-md-6 shadow-sm py-4 px-5" @submit.prevent="createOrder">
+        <div class="form-group">
+          <label for="useremail">Email</label>
+          <input type="email" class="form-control" name="email" id="useremail"
+            :class="{'is-invalid': errors.has('email')}"
+            v-validate="'required|email'"
+            v-model="form.user.email" placeholder="請輸入 Email">
+          <span class="text-danger">{{errors.first('email')}}</span>
+        </div>
+
+        <div class="form-group">
+          <label for="username">收件人姓名</label>
+          <input type="text" class="form-control" name="name" id="username"
+            :class="{'is-invalid': errors.has('name')}"
+            v-model="form.user.name" placeholder="輸入姓名"
+            v-validate="'required'">
+          <span class="text-danger" v-if="errors.has('name')">{{errors.first('name')}}</span>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">收件人電話</label>
+          <input type="tel" class="form-control" id="phone" placeholder="請輸入電話" name="phone"
+            v-model="form.user.tel"
+            v-validate="'required|numeric'">
+          <span class="text-danger" v-if="errors.has('phone')">{{errors.first('phone')}}</span>
+        </div>
+
+        <div class="form-group">
+          <label for="addr">收件人地址</label>
+          <input type="text" class="form-control" name="addr" id="addr" placeholder="請輸入地址"
+            v-model="form.user.addr"
+            v-validate="'required'">
+          <span class="text-danger" v-if="errors.has('addr')">{{errors.first('addr')}}</span>
+        </div>
+
+        <div class="form-group">
+          <label for="useraddress">留言</label>
+          <textarea name="" id="" class="form-control" cols="30" rows="10" v-model="form.message"></textarea>
+        </div>
+        <div class="text-right">
+          <button class="btn btn-primary">送出訂單</button>
+        </div>
+      </form>
+    </div>
+
   </div>
 </template>
 
@@ -159,7 +198,16 @@ export default {
       isLoadingOrder: false,
       loadingItem: '',
       pagination: {},
-      coupon_code: ''
+      coupon_code: '',
+      form: {
+        user: {
+          name: '',
+          email: '',
+          tel: '',
+          addr: ''
+        },
+        message: '',
+      }
     };
   },
   methods: {
@@ -191,11 +239,11 @@ export default {
       });
     },
     getCart() {
-      this.isLoadingOrder = true;
+      this.isLoading = true;
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
       this.$http.get(api).then((res) => {
       this.cart = res.data.data;
-      this.isLoadingOrder = false;
+      this.isLoading = false;
       });
     },
     removeCart(id) {
@@ -221,7 +269,28 @@ export default {
         }
         this.coupon_code = '';
       });
-    }
+    },
+    createOrder() {
+      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/order`;
+      this.$validator.validate().then((result) => {
+        if (result) {
+          this.isLoading = true;
+          this.$http.post(api, {data: this.form}).then((res) => {
+            if (res.data.success) {
+              this.$bus.$emit('message:push', res.data.message, 'success');
+            } else {
+              this.$bus.$emit('message:push', res.data.message, 'danger');
+            }
+            this.isLoading = false;
+            this.form.user.name = ''
+            this.form.user.email = ''
+            this.form.user.tel = ''
+            this.form.user.addr = ''
+            this.form.message = ''
+          });
+        }
+      })
+    },
 
   },
   computed: {

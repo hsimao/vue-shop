@@ -33,7 +33,6 @@ export default {
   props: ['pagination'],
   methods: {
     updatePage(page) {
-      console.log(page)
       this.$emit('update-page', Number(page))
     },
   },
