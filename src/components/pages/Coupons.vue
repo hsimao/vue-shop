@@ -206,7 +206,6 @@ export default {
       return new Date([date]).getTime()
     },
     dateFormat(value) {
-      console.log("yo",value)
       let time  = new Date(value)
       let year  = time.getFullYear()
       let month = ('0'+(time.getMonth()+1)).substr(-2)

@@ -10,36 +10,25 @@
     <table class="table mt-4">
       <thead>
         <tr>
-          <th width="150">購買時間</th>
+          <th width="180">購買時間</th>
           <th>Email</th>
           <th>購買款項</th>
-          <th width="200" class="text-right">應付金額</th>
-          <th width="160">是否付款</th>
+          <th width="120" class="text-right">應付金額</th>
+          <th width="100">是否付款</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>2018/06/13</td>
-          <td>e087754958@gmail.com</td>
-          <td>好看的外套數量：6件<br>酒紅色外套數量：1件</td>
-          <td class="text-right">{{'6640' | currency}}</td>
-          <td>
-            <span class="text-success">已付款</span>
-            <!-- <span v-else>尚未付款</span> -->
-          </td>
-        </tr>
+
         <tr v-for="(item) in orders" :key="item.id">
           <td>{{item.create_at | timeFormat}}</td>
-          <td>{{item.title}}</td>
-          <td class="text-right">{{item.origin_price | currency}}</td>
-          <td class="text-right">{{item.price | currency}}</td>
+          <td>{{item.user.email}}</td>
           <td>
-            <span v-if="item.is_enabled" class="text-success">啟用</span>
-            <span v-else>未啟用</span>
+            <span v-if="item.products" v-for="product in item.products" :key="product.id">{{product.product.title}} x {{product.qty}}</span>
           </td>
+          <td>{{item.total}}</td>
           <td>
-            <button @click="openModal('edit', item)" class="btn btn-outline-primary btn-sm">編輯</button>
-            <button @click="openModal('del', item)" class="btn btn-outline-danger btn-sm">刪除</button>
+            <span v-if="item.is_paid" class="text-success">已付款</span>
+            <span v-else>未付款</span>
           </td>
         </tr>
       </tbody>
@@ -74,6 +63,11 @@ export default {
           if (this.orders.length <= 0) {
             this.$bus.$emit('message:push', '尚無訂單', 'danger')
           }
+          res.data.orders.forEach((item,id) => {
+            console.log(id,item.products)
+            console.log(item.products.qty)
+            // console.log(id)
+          })
         } else {
           this.$bus.$emit('message:push', res.data.message, 'danger')
         }
