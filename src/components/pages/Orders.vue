@@ -29,7 +29,7 @@
           </td>
         </tr>
         <tr v-for="(item) in orders" :key="item.id">
-          <td>{{item.category}}</td>
+          <td>{{item.create_at | timeFormat}}</td>
           <td>{{item.title}}</td>
           <td class="text-right">{{item.origin_price | currency}}</td>
           <td class="text-right">{{item.price | currency}}</td>
@@ -86,7 +86,3 @@ export default {
   }
 };
 </script>
-
-<style lang="sass" scoped>
-
-</style>

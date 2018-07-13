@@ -12,6 +12,8 @@ import App from './App';
 import router from './router';
 import './bus';
 import currencyFilter from './filters/currency';
+import dateFormat from './filters/dateFormat';
+import timeFormat from './filters/timeFormat';
 
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
@@ -19,6 +21,8 @@ Vue.use(VeeValidate);
 VeeValidate.Validator.localize('zh_TW', zhTW_Validate);
 
 Vue.filter('currency', currencyFilter);
+Vue.filter('dateFormat', dateFormat);
+Vue.filter('timeFormat', timeFormat);
 Vue.component('HalfCircleSpinner', HalfCircleSpinner); //全域組件
 Vue.component('Pagination', Pagination); //全域組件
 Vue.component('Datepicker', Datepicker);
