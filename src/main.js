@@ -6,7 +6,7 @@ import { HalfCircleSpinner } from 'epic-spinners';
 import Pagination from '@/components/Pagination';
 import VeeValidate from 'vee-validate';
 import zhTW_Validate from 'vee-validate/dist/locale/zh_TW'
-
+import Datepicker from 'vuejs-datepicker';
 
 import App from './App';
 import router from './router';
@@ -21,6 +21,7 @@ VeeValidate.Validator.localize('zh_TW', zhTW_Validate);
 Vue.filter('currency', currencyFilter);
 Vue.component('HalfCircleSpinner', HalfCircleSpinner); //全域組件
 Vue.component('Pagination', Pagination); //全域組件
+Vue.component('Datepicker', Datepicker);
 
 new Vue({
   el: '#app',

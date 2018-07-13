@@ -67,7 +67,12 @@
                 </div>
                 <div class="form-group">
                   <label for="datetime">優惠到期日</label>
-                  <input v-model="tempCoupons.due_date" class="form-control" type="datetime-local" value="2018-12-30T00:00:00" id="datetime">
+                  <datepicker class="datepicker"
+                    :bootstrap-styling="true"
+                    :language="zh"
+                    :format="dateFormat"
+                    v-model="tempCoupons.due_date">
+                  </datepicker>
                 </div>
                 <div class="form-group">
                   <label for="title">優惠券代碼</label>
@@ -126,6 +131,7 @@
 
 <script>
 import $ from 'jquery';
+import { zh } from 'vuejs-datepicker/dist/locale';
 
 export default {
   data() {
@@ -136,6 +142,7 @@ export default {
       isLoading: false,
       isLoadingFile: false,
       pagination: {},
+      zh: zh // datepicker 語言包
     };
   },
   methods: {
@@ -155,47 +162,35 @@ export default {
         }
       });
     },
-
     openModal(type, item) {
       this.type = type
-
       if (this.type === 'add') {
         this.tempCoupons = {};
         $('#couponModal').modal('show')
       }
-
       if (this.type === 'edit') {
         this.tempCoupons = Object.assign({}, item);
         $('#couponModal').modal('show')
       }
-
       if (this.type === 'del') {
         this.tempCoupons = Object.assign({}, item);
         $('#delCouponModal').modal('show')
       }
-
     },
-
     updateCoupons() {
       let api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/coupon`;
       let httpMathod = 'post';
-
       // 時間格式化
       this.tempCoupons.due_date = this.datetemp(this.tempCoupons.due_date)
-      console.log(this.tempCoupons.due_date)
-
       if (this.type === 'edit') {
         api = `${api}/${this.tempCoupons.id}`
         httpMathod = 'put';
       }
-
       if (this.type === 'del') {
         api = `${api}/${this.tempCoupons.id}`
         httpMathod = 'delete';
       }
-
       this.$http[httpMathod](api, { data: this.tempCoupons }).then((res) => {
-        // console.log(this.tempCoupons)
         if (res.data.success) {
           this.$bus.$emit('message:push', res.data.message, 'success')
           this.getCoupons();
@@ -205,14 +200,11 @@ export default {
         $('#couponModal').modal('hide');
         $('#delCouponModal').modal('hide');
       });
-
       this.type === '';
     },
-
     datetemp(date) {
       return new Date([date]).getTime()
     },
-
     dateFormat(value) {
       let time  = new Date(value)
       let year  = time.getFullYear()
@@ -220,9 +212,8 @@ export default {
       let date  = ('0'+time.getDate()).substr(-2)
       let min   = ('0'+time.getMinutes()).substr(-2)
       let sec   = ('0'+time.getSeconds()).substr(-2)
-      return `${year}/${month}/${date} ${min}:${sec}`
+      return `${year}/${month}/${date}`
     },
-
   },
   created() {
     this.getCoupons();
