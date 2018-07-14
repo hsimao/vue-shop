@@ -17,3 +17,28 @@
 // 消除table 隔線
 .table th, .table td, .table thead th
   border: none
+
+// 超出範圍文字樣式
+.textOver
+  position: relative
+  height: 30px
+  margin-bottom: 3px
+  overflow: hidden
+  &:before
+    content: attr(data-qty)
+    position: absolute
+    top: 0
+    right: 0
+    width: 50px
+    height: 100%
+    background: linear-gradient(to right,rgba(white,0.1) 0, rgba(white,1) 40%, rgba(white,1))
+    text-align: right
+
+.table-striped tr:nth-child(odd) .textOver
+  &:before
+    background: linear-gradient(to right,rgba(#F2F2F2,0.1) 0, rgba(#F2F2F2, 1) 40%, rgba(#F2F2F2,1))
+
+// 超連結文字樣式 p
+a, a:hover
+  text-decoration: none
+  color: $primary

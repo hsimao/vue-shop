@@ -278,6 +278,7 @@ export default {
           this.$http.post(api, {data: this.form}).then((res) => {
             if (res.data.success) {
               this.$bus.$emit('message:push', res.data.message, 'success');
+              this.$router.push(`checkout/${res.data.orderId}`);
             } else {
               this.$bus.$emit('message:push', res.data.message, 'danger');
             }

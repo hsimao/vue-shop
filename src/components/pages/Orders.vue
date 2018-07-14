@@ -7,23 +7,30 @@
         color="#7971ea"
       />
     </div>
-    <table class="table mt-4">
-      <thead>
+    <table class="table mt-4 table-striped">
+      <thead class="bg-secondary text-white">
         <tr>
-          <th width="180">購買時間</th>
-          <th>Email</th>
-          <th>購買款項</th>
-          <th width="120" class="text-right">應付金額</th>
-          <th width="100">是否付款</th>
+          <th width="20%">購買時間</th>
+          <th width="15%">Email</th>
+          <th >購買款項</th>
+          <th width="10%" class="text-right">應付金額</th>
+          <th width="10%">是否付款</th>
         </tr>
       </thead>
       <tbody>
 
-        <tr v-for="(item) in orders" :key="item.id">
+        <tr v-for="(item) in orders" :key="item.id" v-if="item.products">
           <td>{{item.create_at | timeFormat}}</td>
           <td>{{item.user.email}}</td>
           <td>
-            <span v-if="item.products" v-for="product in item.products" :key="product.id">{{product.product.title}} x {{product.qty}}</span>
+            <router-link :to="{path: `/checkout/${item.id}`}">
+              <p class="textOver" 
+              v-for="product in item.products" 
+              :key="product.id" 
+              :data-qty="`${product.qty} ${product.product.unit}`">
+                {{product.product.title}}
+              </p>
+            </router-link>
           </td>
           <td>{{item.total}}</td>
           <td>
@@ -63,17 +70,11 @@ export default {
           if (this.orders.length <= 0) {
             this.$bus.$emit('message:push', '尚無訂單', 'danger')
           }
-          res.data.orders.forEach((item,id) => {
-            console.log(id,item.products)
-            console.log(item.products.qty)
-            // console.log(id)
-          })
         } else {
           this.$bus.$emit('message:push', res.data.message, 'danger')
         }
       });
     },
-
   },
   created() {
     this.getOrders();
