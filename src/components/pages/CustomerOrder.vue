@@ -202,10 +202,10 @@ export default {
       coupon_code: '',
       form: {
         user: {
-          name: '',
-          email: '',
-          tel: '',
-          addr: ''
+          name: '王小明',
+          email: 'test123@gmail.com',
+          tel: '0987654321',
+          addr: '高雄市鹽埕區99巷10號101F-2'
         },
         message: '',
       }
