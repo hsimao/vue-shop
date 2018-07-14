@@ -11,3 +11,8 @@
 6. loading Animation
 7. 表單驗證
 8. Bootstrap Dashboard
+
+#### 操作畫面
+![image](https://github.com/hsimao/vue-shop/blob/master/shop_demo01.gif)
+
+![image](https://github.com/hsimao/vue-shop/blob/master/shop_demo02.gif)
