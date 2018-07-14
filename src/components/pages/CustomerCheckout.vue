@@ -46,7 +46,7 @@
             </tr>
             <tr>
               <th>收件人地址</th>
-              <td>{{ order.user.address }}</td>
+              <td>{{ order.user.addr }}</td>
             </tr>
             <tr>
               <th>付款狀態</th>
