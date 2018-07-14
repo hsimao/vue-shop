@@ -36,8 +36,8 @@ export default {
 	data() {
 		return {
 			user: {
-				username: '',
-        password: '',
+				username: 'hsimao@gmail.com',
+        password: 'hsimao',
       },
       isLoading: false,
 		}
