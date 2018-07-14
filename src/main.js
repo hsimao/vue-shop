@@ -2,7 +2,7 @@ import Vue from 'vue';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import 'bootstrap';
-import { HalfCircleSpinner } from 'epic-spinners';
+import { LoopingRhombusesSpinner } from 'epic-spinners';
 import Pagination from '@/components/Pagination';
 import VeeValidate from 'vee-validate';
 import zhTW_Validate from 'vee-validate/dist/locale/zh_TW'
@@ -23,7 +23,7 @@ VeeValidate.Validator.localize('zh_TW', zhTW_Validate);
 Vue.filter('currency', currencyFilter);
 Vue.filter('dateFormat', dateFormat);
 Vue.filter('timeFormat', timeFormat);
-Vue.component('HalfCircleSpinner', HalfCircleSpinner); //全域組件
+Vue.component('LoopingRhombusesSpinner', LoopingRhombusesSpinner); //全域組件
 Vue.component('Pagination', Pagination); //全域組件
 Vue.component('Datepicker', Datepicker);
 

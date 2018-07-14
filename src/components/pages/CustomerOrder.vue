@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="loading center" v-if="isLoading">
-      <half-circle-spinner
-        :animation-duration="1500"
+      <looping-rhombuses-spinner
+        :animation-duration="2000"
         :size="80"
         color="#7971ea"
       />
@@ -28,7 +28,8 @@
           <div class="card-footer d-flex">
             <button @click="getProduct(item.id)" type="button" class="btn btn-outline-secondary btn-sm">
               <div class="loading inline" v-if="item.id === loadingItem">
-                <half-circle-spinner :animation-duration="1500"
+                <looping-rhombuses-spinner
+                  :animation-duration="2000"
                   :size="20" color="#7971ea" />
               </div>
               查看更多

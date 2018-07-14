@@ -1,8 +1,8 @@
 <template>
 	<div>
     <div class="loading center" v-if="isLoading">
-      <half-circle-spinner
-        :animation-duration="1500"
+      <looping-rhombuses-spinner
+        :animation-duration="2000"
         :size="80"
         color="#7971ea"
       />
@@ -65,8 +65,11 @@
                 <div class="form-group">
                   <label for="customFile">或 上傳圖片
                     <div class="loading inline" v-if="isLoadingFile">
-                      <half-circle-spinner :animation-duration="1500"
-                        :size="28" color="#7971ea" />
+                      <looping-rhombuses-spinner
+                        :animation-duration="2000"
+                        :size="28"
+                        color="#7971ea"
+                      />
                     </div>
                   </label>
                   <input @change="uploadFile" type="file" id="customFile" class="form-control"

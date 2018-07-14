@@ -21,12 +21,7 @@ export default {
   z-index: 100
 .loading.center
   position: fixed
-  top: 300px
-  left: 50%
-  transform: translateY(-50%, -50%)
-
-.loading.center-l
-  position: absolute
+  top: 200px
   left: 50%
   transform: translateX(-50%)
 
