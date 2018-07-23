@@ -17,13 +17,11 @@ export default new Router({
       path: '*',
       redirect: 'login',
     },
-
     {
-      path: '/login',
+      path: '/',
       name: 'Login',
       component: Login,
     },
-
     {
       path: '/admin',
       name: 'Dashboard',
@@ -46,7 +44,6 @@ export default new Router({
       },
     ]
     },
-
     {
       path: '/',
       component: Dashboard,
