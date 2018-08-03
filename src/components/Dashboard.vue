@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Navbar/>
+    <Navbar></Navbar>
     <div class="container-fluid">
       <div class="row">
         <Sidebar></Sidebar>
@@ -15,7 +15,6 @@
 <script>
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
-import Pagination from './Pagination';
 
 export default {
   components: {

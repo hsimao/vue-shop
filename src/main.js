@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import Vuex from 'vuex';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import 'bootstrap';
@@ -10,12 +11,14 @@ import Datepicker from 'vuejs-datepicker';
 
 import App from './App';
 import router from './router';
+import store from './store';
 import './bus';
 import currencyFilter from './filters/currency';
 import dateFormat from './filters/dateFormat';
 import timeFormat from './filters/timeFormat';
 
 Vue.config.productionTip = false;
+Vue.use(Vuex);
 Vue.use(VueAxios, axios);
 Vue.use(VeeValidate);
 VeeValidate.Validator.localize('zh_TW', zhTW_Validate);
@@ -30,6 +33,7 @@ Vue.component('Datepicker', Datepicker);
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>',
 });

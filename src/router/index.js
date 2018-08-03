@@ -18,7 +18,7 @@ export default new Router({
       redirect: 'login',
     },
     {
-      path: '/',
+      path: '/login',
       name: 'Login',
       component: Login,
     },
@@ -32,12 +32,12 @@ export default new Router({
         component: Products,
         meta: { requiresAuth: true },
       },{
-        path: 'Orders',
+        path: 'orders',
         name: 'Orders',
         component: Orders,
         meta: { requiresAuth: true },
       },{
-        path: 'Coupons',
+        path: 'coupons',
         name: 'Coupons',
         component: Coupons,
         meta: { requiresAuth: true },

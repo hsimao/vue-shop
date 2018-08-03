@@ -1,12 +1,5 @@
 <template>
   <div>
-    <div class="loading center" v-if="isLoading">
-      <looping-rhombuses-spinner
-        :animation-duration="2000"
-        :size="80"
-        color="#7971ea"
-      />
-    </div>
     <div class="row mt-4">
       <div class="col-md-4 mb-4" v-for="item in products" :key="item.id">
         <div class="card border-0 shadow-sm">
@@ -195,7 +188,6 @@ export default {
       products: [],
       product: {},
       cart: {},
-      isLoading: false,
       isLoadingOrder: false,
       loadingItem: '',
       pagination: {},
@@ -213,12 +205,12 @@ export default {
   },
   methods: {
     getProducts(page = 1) {
-      this.isLoading = true;
+      this.$store.dispatch('updateLoading', true);
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products?page=${page}`;
       this.$http.get(api).then((res) => {
         this.products = res.data.products;
         this.pagination = res.data.pagination;
-        this.isLoading = false;
+        this.$store.dispatch('updateLoading', false);
       });
     },
     getProduct(id) {
@@ -240,11 +232,11 @@ export default {
       });
     },
     getCart() {
-      this.isLoading = true;
+      this.$store.dispatch('updateLoading', true);
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
       this.$http.get(api).then((res) => {
       this.cart = res.data.data;
-      this.isLoading = false;
+      this.$store.dispatch('updateLoading', false);
       });
     },
     removeCart(id) {
@@ -275,7 +267,7 @@ export default {
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/order`;
       this.$validator.validate().then((result) => {
         if (result) {
-          this.isLoading = true;
+          this.$store.dispatch('updateLoading', true);
           this.$http.post(api, {data: this.form}).then((res) => {
             if (res.data.success) {
               this.$bus.$emit('message:push', res.data.message, 'success');
@@ -283,7 +275,7 @@ export default {
             } else {
               this.$bus.$emit('message:push', res.data.message, 'danger');
             }
-            this.isLoading = false;
+            this.$store.dispatch('updateLoading', false);
             this.form.user.name = ''
             this.form.user.email = ''
             this.form.user.tel = ''
